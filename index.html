@@ -4,35 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect to Naver</title>
+    <title>Redirect to Naver or Browser</title>
 </head>
 <body>
-  <script>
-        // 尝试打开 Naver App，并在其中加载指定页面
+    <script>
+        // 标记是否成功打开 Naver App
         var hasApp = false;
 
-        // 尝试打开 Naver App，若失败则在2秒后进行备用跳转
+        // 记录当前时间，用于后续判断是否成功打开了应用
+        var startTime = Date.now();
+
+        // 使用 Intent 尝试调用 Naver App 并加载目标页面
+        window.location.href = "intent://default?url=https://vip.zkiee2.com/rk/room1#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
+
+        // 如果没有成功打开 Naver App，几秒后跳转到浏览器上的目标链接
         setTimeout(function() {
             if (!hasApp) {
-                // 使用手机自带的浏览器跳转到目标链接
+                // 备用跳转到自带浏览器打开目标链接
                 window.location.href = "https://vip.zkiee2.com/rk/room1";
             }
         }, 2000);
 
-        // 尝试调用 Naver App 的深度链接
-        var startTime = Date.now();
-        window.location.href = "naversearchapp://default?url=https://vip.zkiee2.com/rk/room1";
-
-        // 通过监听页面的可见性变化来检测是否成功启动应用
+        // 添加页面可见性变化的事件监听
         document.addEventListener("visibilitychange", function() {
             if (document.visibilityState === 'hidden') {
-                hasApp = true; // 如果页面被隐藏，说明成功启动了应用
-            } else {
-                // 页面恢复可见状态
-                var elapsedTime = Date.now() - startTime;
-                if (elapsedTime < 2000) {
-                    hasApp = true;
-                }
+                hasApp = true; // 如果页面变为隐藏状态，说明 Naver App 成功启动
             }
         });
     </script>

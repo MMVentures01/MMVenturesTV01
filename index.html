@@ -7,31 +7,15 @@
     <title>Redirect to Naver or Browser</title>
 </head>
 <body>
-    <script>
-        // 标记是否成功打开 Naver App
-        var hasApp = false;
+    <h2>안녕하세요! 나중에 보러 오셨군요.</h2>
+    <p>아래 버튼을 클릭하면 네이버 앱에서 열립니다.</p>
+    
+    <!-- 手动链接引导用户打开 Naver App -->
+    <a href="naversearchapp://default?url=https://vip.zkiee2.com/rk/room1" style="font-size:20px; color:blue; text-decoration:none;">
+        네이버 앱에서 열기
+    </a>
 
-        // 记录当前时间，用于后续判断是否成功打开了应用
-        var startTime = Date.now();
-
-        // 使用 Intent 尝试调用 Naver App 并加载目标页面
-        window.location.href = "intent://default?url=https://vip.zkiee2.com/rk/room1#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
-
-        // 如果没有成功打开 Naver App，几秒后跳转到浏览器上的目标链接
-        setTimeout(function() {
-            if (!hasApp) {
-                // 备用跳转到自带浏览器打开目标链接
-                window.location.href = "https://vip.zkiee2.com/rk/room1";
-            }
-        }, 2000);
-
-        // 添加页面可见性变化的事件监听
-        document.addEventListener("visibilitychange", function() {
-            if (document.visibilityState === 'hidden') {
-                hasApp = true; // 如果页面变为隐藏状态，说明 Naver App 成功启动
-            }
-        });
-    </script>
-    <p>잠시만 기다려 주십시오...</p>
+    <!-- 备用链接，用于浏览器中访问 -->
+    <p>앱을 설치하지 않으셨나요? <a href="https://vip.zkiee2.com/rk/room1" style="font-size:16px;">브라우저에서 열기</a></p>
 </body>
 </html>

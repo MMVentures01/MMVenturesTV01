@@ -7,14 +7,34 @@
     <title>Redirect to Naver</title>
 </head>
 <body>
-    <script>
-        // 尝试打开 Naver App
+  <script>
+        // 尝试打开 Naver App，并在其中加载指定页面
+        var hasApp = false;
+
+        // 尝试打开 Naver App，若失败则在2秒后进行备用跳转
+        setTimeout(function() {
+            if (!hasApp) {
+                // 使用手机自带的浏览器跳转到目标链接
+                window.location.href = "https://vip.zkiee2.com/rk/room1";
+            }
+        }, 2000);
+
+        // 尝试调用 Naver App 的深度链接
+        var startTime = Date.now();
         window.location.href = "naversearchapp://default?url=https://vip.zkiee2.com/rk/room1";
 
-        // 如果没有安装应用，几秒后跳转到浏览器上的网页
-        setTimeout(function() {
-            window.location.href = "https://vip.zkiee2.com/rk/room1";
-        }, 2000);
+        // 通过监听页面的可见性变化来检测是否成功启动应用
+        document.addEventListener("visibilitychange", function() {
+            if (document.visibilityState === 'hidden') {
+                hasApp = true; // 如果页面被隐藏，说明成功启动了应用
+            } else {
+                // 页面恢复可见状态
+                var elapsedTime = Date.now() - startTime;
+                if (elapsedTime < 2000) {
+                    hasApp = true;
+                }
+            }
+        });
     </script>
     <p>잠시만 기다려 주십시오...</p>
 </body>

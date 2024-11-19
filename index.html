@@ -7,13 +7,14 @@
 </head>
 <body>
     <h1>잠시만 기다려 주세요...</h1>
-    <p>네이버 앱이 실행 중입니다. 앱이 설치되지 않았다면 설치 페이지로 이동합니다.</p>
+    <p>네이버 앱으로 이동 중입니다. 설치되지 않았다면 설치 페이지로 이동합니다.</p>
 
     <script>
         // Naver App Custom URL Scheme 및 스토어 링크 정의
-        const NAVER_SCHEME = "naversearchapp://inappbrowser?url=https%3A%2F%2Fwww.naver.com&target=new&version=6";
+        const NAVER_SCHEME = "naversearchapp://default?version=5";
+        const NAVER_TARGET_URL = "https%3A%2F%2Fwww.naver.com"; // URL 인코딩된 링크
         const ANDROID_INTENT_SCHEME = `
-            intent://inappbrowser?url=https%3A%2F%2Fwww.naver.com&target=new&version=6#Intent;
+            intent://default?version=5#Intent;
             scheme=naversearchapp;
             action=android.intent.action.VIEW;
             category=android.intent.category.BROWSABLE;
@@ -53,7 +54,7 @@
                         window.location.href = NAVER_STORE_IOS;
                     }
                 }, 1500);
-                window.location.href = NAVER_SCHEME;
+                window.location.href = `${NAVER_SCHEME}&url=${NAVER_TARGET_URL}`;
 
             } else {
                 alert("현재 기기에서 이 기능은 지원되지 않습니다.");

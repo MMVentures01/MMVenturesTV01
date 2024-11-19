@@ -1,49 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>跳转到Naver App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naver App 실행</title>
 </head>
 <body>
-    <button id="openNaver">打开 Naver APP</button>
+    <h1>잠시만 기다려 주세요...</h1>
+    <p>네이버 앱이 실행 중입니다. 앱이 설치되지 않았다면 설치 페이지로 이동합니다.</p>
 
     <script>
-        document.getElementById("openNaver").addEventListener("click", function () {
-            // 检测是否在KakaoTalk中打开
+        // Naver App Custom URL Scheme 및 스토어 링크 정의
+        const NAVER_SCHEME = "naversearchapp://inappbrowser?url=https%3A%2F%2Fwww.naver.com&target=new&version=6";
+        const ANDROID_INTENT_SCHEME = `
+            intent://inappbrowser?url=https%3A%2F%2Fwww.naver.com&target=new&version=6#Intent;
+            scheme=naversearchapp;
+            action=android.intent.action.VIEW;
+            category=android.intent.category.BROWSABLE;
+            package=com.nhn.android.search;
+            end;
+        `;
+        const NAVER_STORE_IOS = "https://apps.apple.com/kr/app/id393499958";
+        const NAVER_STORE_ANDROID = "https://play.google.com/store/apps/details?id=com.nhn.android.search";
+
+        /**
+         * 기기의 운영 체제를 판별
+         * @returns {"android"|"ios"|"other"}
+         */
+        function detectOS() {
             const userAgent = navigator.userAgent.toLowerCase();
-            const isKakaoTalk = userAgent.indexOf("kakaotalk") > -1;
+            if (userAgent.includes("android")) return "android";
+            if (userAgent.includes("iphone") || userAgent.includes("ipad") || userAgent.includes("ipod")) return "ios";
+            return "other";
+        }
 
-            if (isKakaoTalk) {
-                // 判断手机系统
-                const isAndroid = userAgent.indexOf("android") > -1;
-                const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+        /**
+         * Naver App 실행 또는 설치 페이지로 이동
+         */
+        function redirectToNaverApp() {
+            const os = detectOS();
 
-                if (isAndroid) {
-                    // 安卓跳转 - 使用 Intent Scheme
-                    window.location.href = "intent://default#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
-                    
-                    // 方法 2: 使用 URI Scheme 作为备用
-                    setTimeout(function () {
-                        window.location.href = "naversearchapp://default?version=5";
-                    }, 1000);
-                } else if (isIOS) {
-                    // iOS跳转 - 使用 URI Scheme
-                    window.location.href = "naversearchapp://default?version=1";
-                    
-                    // 方法 2: 使用 App Store 链接作为最终备选方案
-                    setTimeout(function () {
-                        if (document.visibilityState !== 'hidden') {
-                            window.location.href = "https://apps.apple.com/app/naver";
-                        }
-                    }, 2000);
-                } else {
-                    // 其他设备，跳转到App Store或Google Play
-                    window.location.href = "https://apps.apple.com/app/naver"; // 替换为 Naver App 在 App Store 的链接
-                }
+            if (os === "android") {
+                // Android: Intent Scheme 사용
+                window.location.href = ANDROID_INTENT_SCHEME;
+
+            } else if (os === "ios") {
+                // iOS: URL Scheme 호출
+                const clickedAt = +new Date();
+                setTimeout(() => {
+                    if (+new Date() - clickedAt < 2000) {
+                        // App이 설치되지 않은 경우 App Store로 이동
+                        window.location.href = NAVER_STORE_IOS;
+                    }
+                }, 1500);
+                window.location.href = NAVER_SCHEME;
+
             } else {
-                alert("请在KakaoTalk中打开此链接");
+                alert("현재 기기에서 이 기능은 지원되지 않습니다.");
             }
-        });
+        }
+
+        // 페이지 로드 시 자동 실행
+        redirectToNaverApp();
     </script>
 </body>
 </html>
-

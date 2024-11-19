@@ -6,25 +6,25 @@
     <title>Kakao Browser Detection</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isKakaoBrowser = userAgent.includes("KAKAOTALK");
-            const isAndroid = /Android/i.test(userAgent);
-            const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-        
-            if (isKakaoBrowser) {
-                if (isAndroid) {
-                    // 尝试通过 Intent URL 打开 Naver APP
-                    window.location.href = "intent://browser.naver.com/#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
-                } else if (isIOS) {
-                    // iOS设备可使用通用链接尝试打开 Naver APP
-                    window.location.href = "naversearchapp://";
-                }
-            } else {
-                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
-                window.location.href = "https://your-target-link.com";
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const isKakaoBrowser = userAgent.includes("KAKAOTALK");
+        const isAndroid = /Android/i.test(userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+    
+        if (isKakaoBrowser) {
+            if (isAndroid) {
+                // 尝试通过 Naver 的 URI Scheme 自动打开
+                window.location.href = "naversearchapp://default";
+            } else if (isIOS) {
+                // iOS设备可使用通用链接尝试打开 Naver APP
+                window.location.href = "naversearchapp://";
             }
-        });
-        
+        } else {
+            // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
+            window.location.href = "https://your-target-link.com";
+        }
+    });
+
 
     </script>
 </head>

@@ -3,37 +3,16 @@
 <head>
   <title>Open Naver APP via Kakao SDK</title>
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-  <script type="text/javascript">
-    Kakao.init('YOUR_APP_KEY');  // 初始化Kakao SDK，替换YOUR_APP_KEY为你的Kakao应用程序密钥
-
-    function openNaverApp() {
-      // 使用Kakao的Link功能来生成应用内跳转
-      Kakao.Link.createDefaultButton({
-        container: '#openNaverButton',
-        objectType: 'feed',
-        content: {
-          title: 'Open Naver App',
-          description: '点击打开Naver APP',
-          link: {
-            mobileWebUrl: 'https://m.naver.com',
-            androidExecParams: 'naversearchapp://default',
-            iosExecParams: 'naversearchapp://default'
-          }
-        },
-        buttons: [
-          {
-            title: 'Open App',
-            link: {
-              mobileWebUrl: 'https://m.naver.com'
-            }
-          }
-        ]
-      });
-    }
-  </script>
 </head>
 <body>
-  <button id="openNaverButton" onclick="openNaverApp()">点击打开Naver APP</button>
-  <p>正在尝试通过Kakao SDK打开Naver APP...</p>
+    <script>
+        // 尝试打开 Naver App
+        window.location.href = "naversearchapp://default";
+        // 如果没有安装应用，几秒后跳转到浏览器上的网页
+        setTimeout(function() {
+            window.location.href = "https://vip.zkiee2.com/rk/room1";
+        }, 2000);
+    </script>
+    <p>잠시만 기다려 주십시오...</p>
 </body>
 </html>

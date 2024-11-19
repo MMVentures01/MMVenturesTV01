@@ -1,21 +1,39 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect to Naver or Browser</title>
+  <title>Open Naver APP via Kakao SDK</title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script type="text/javascript">
+    Kakao.init('YOUR_APP_KEY');  // 初始化Kakao SDK，替换YOUR_APP_KEY为你的Kakao应用程序密钥
+
+    function openNaverApp() {
+      // 使用Kakao的Link功能来生成应用内跳转
+      Kakao.Link.createDefaultButton({
+        container: '#openNaverButton',
+        objectType: 'feed',
+        content: {
+          title: 'Open Naver App',
+          description: '点击打开Naver APP',
+          link: {
+            mobileWebUrl: 'https://m.naver.com',
+            androidExecParams: 'naversearchapp://default',
+            iosExecParams: 'naversearchapp://default'
+          }
+        },
+        buttons: [
+          {
+            title: 'Open App',
+            link: {
+              mobileWebUrl: 'https://m.naver.com'
+            }
+          }
+        ]
+      });
+    }
+  </script>
 </head>
 <body>
-    <h2>안녕하세요! 나중에 보러 오셨군요.</h2>
-    <p>아래 버튼을 클릭하면 네이버 앱에서 열립니다.</p>
-    
-    <!-- 手动链接引导用户打开 Naver App -->
-    <a href="naversearchapp://default?url=https://vip.zkiee2.com/rk/room1" style="font-size:20px; color:blue; text-decoration:none;">
-        네이버 앱에서 열기
-    </a>
-
-    <!-- 备用链接，用于浏览器中访问 -->
-    <p>앱을 설치하지 않으셨나요? <a href="https://vip.zkiee2.com/rk/room1" style="font-size:16px;">브라우저에서 열기</a></p>
+  <button id="openNaverButton" onclick="openNaverApp()">点击打开Naver APP</button>
+  <p>正在尝试通过Kakao SDK打开Naver APP...</p>
 </body>
 </html>

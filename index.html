@@ -1,43 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kakao Browser Detection</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isKakaoBrowser = userAgent.includes("KAKAOTALK");
-            const isAndroid = /Android/i.test(userAgent);
-            const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-
-            if (isKakaoBrowser) {
-                if (isAndroid) {
-                    // 安卓设备使用 Intent URL 尝试打开 Naver 应用
-                    window.location.href = "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;action=android.intent.action.VIEW;end";
-
-                    // 方法 2: 使用 Naver 应用的 URI Scheme
-                    setTimeout(function () {
-                        window.location.href = "naversearchapp://default";
-                    }, 1000);
-
-                    // 方法 3: 使用 Google Play Store 链接作为最终备选方案
-                    setTimeout(function () {
-                        if (document.visibilityState !== 'hidden') {
-                            window.location.href = "https://play.google.com/store/apps/details?id=com.nhn.android.search";
-                        }
-                    }, 2000);
-                } else if (isIOS) {
-                    // iOS设备可使用通用链接尝试打开 Naver APP
-                    window.location.href = "naversearchapp://";
-                }
-            } else {
-                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
-                window.location.href = "https://your-target-link.com";
-            }
-        });
-    </script>
+    <title>跳转到Naver App</title>
 </head>
 <body>
+    <script>
+        function openNaverApp() {
+            // 检测是否在KakaoTalk中打开
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isKakaoTalk = userAgent.indexOf("kakaotalk") > -1;
+
+            if (isKakaoTalk) {
+                // 判断手机系统
+                const isAndroid = userAgent.indexOf("android") > -1;
+                const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+                if (isAndroid) {
+                    // 安卓跳转
+                    window.location.href = "naver://"; // 替换为Naver App的自定义URL scheme
+                } else if (isIOS) {
+                    // iOS跳转
+                    window.location.href = "naversearchapp://"; // 替换为Naver App的自定义URL scheme for iOS
+                } else {
+                    // 其他设备，跳转到App Store或Google Play
+                    window.location.href = "https://apps.apple.com/app/naver"; // 替换为Naver App在App Store的链接
+                }
+            } else {
+                alert("请在KakaoTalk中打开此链接");
+            }
+        }
+
+        openNaverApp();
+    </script>
 </body>
 </html>

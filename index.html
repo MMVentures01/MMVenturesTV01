@@ -4,37 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakao Browser Detection</title>
-    <style>
-        #open-in-browser {
-            display: none;
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background-color: #ffcc00;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            cursor: pointer;
-        }
-    </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isKakaoBrowser = userAgent.includes("KAKAOTALK");
-            const openInBrowserPrompt = document.getElementById("open-in-browser");
-
-            if (isKakaoBrowser) {
-                openInBrowserPrompt.style.display = "block";
-            } else {
-                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
-                window.location.href = "https://vip.zkiee2.com/rk/room1";
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const isKakaoBrowser = userAgent.includes("KAKAOTALK");
+        const isAndroid = /Android/i.test(userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+    
+        if (isKakaoBrowser) {
+            if (isAndroid) {
+                // 尝试通过 Intent URL 打开 Naver APP
+                window.location.href = "intent://vip.zkiee2.com/rk/room1/#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
+            } else if (isIOS) {
+                // iOS设备可使用通用链接尝试打开 Naver APP
+                window.location.href = "naversearchapp://";
             }
-        });
+        } else {
+            // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
+            window.location.href = "https://vip.zkiee2.com/rk/room1";
+        }
+    });
+
     </script>
 </head>
 <body>
-    <div id="open-in-browser" onclick="alert('点击的位置不对哦，还需要向下移动的⠸ 按钮哦')">
-        请点击右下角⠸ 按钮，选择使用浏览器打开。⬇
-    </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
             const userAgent = navigator.userAgent.toLowerCase();
             const isAndroid = userAgent.indexOf("android") > -1;
             const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-            const targetUrl = encodeURIComponent("https://vip.zkiee2.com/rk/room1").replace(/%26/g, "%2526").replace(/%2F/g, "%252F").replace(/%3A/g, "%253A").replace(/%3F/g, "%253F").replace(/%3D/g, "%253D");
+            const targetUrl = encodeURIComponent("https://vip.zkiee2.com/rk/room1");
 
             if (isAndroid) {
                 // 安卓跳转 - 使用 Intent Scheme

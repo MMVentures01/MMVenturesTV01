@@ -13,18 +13,10 @@
         
             if (isKakaoBrowser) {
                 if (isAndroid) {
-                    // 尝试使用 iframe 来打开 Naver APP
-                    const iframe = document.createElement('iframe');
-                    iframe.style.display = 'none';
-                    iframe.src = "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.nhn.android.search;end";
-                    document.body.appendChild(iframe);
-        
-                    // 设定一个超时，如果 iframe 没有工作则跳转到浏览器的下载页面
-                    setTimeout(function () {
-                        window.location.href = "https://play.google.com/store/apps/details?id=com.nhn.android.search";
-                    }, 2000);
+                    // 尝试通过 Intent 打开 Naver 应用，指定 action 和路径
+                    window.location.href = "intent://inappbrowser#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;package=com.nhn.android.search;end";
                 } else if (isIOS) {
-                    // iOS设备尝试使用通用链接打开 Naver APP
+                    // iOS设备可使用通用链接尝试打开 Naver APP
                     window.location.href = "naversearchapp://";
                 }
             } else {
@@ -32,6 +24,7 @@
                 window.location.href = "https://your-target-link.com";
             }
         });
+
 
     </script>
 </head>

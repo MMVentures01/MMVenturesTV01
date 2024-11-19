@@ -5,36 +5,33 @@
 </head>
 <body>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isKakaoBrowser = userAgent.includes("KAKAOTALK");
-            const isAndroid = /Android/i.test(userAgent);
-            const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-            const isSamsung = /SamsungBrowser/i.test(userAgent) || /SM-|SCH-|GT-|SGH-|Galaxy/i.test(userAgent);
-        
-            if (isKakaoBrowser) {
-                if (isAndroid) {
-                    const intentUrl = isSamsung
-                        ? "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;action=android.intent.action.VIEW;end"
-                        : "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
-        
-                    // 尝试通过 Intent 打开 Naver 应用
-                    window.location.href = intentUrl;
-        
-                    // 延迟后重试或提供下载链接
-                    setTimeout(function () {
-                        if (document.visibilityState !== 'hidden') {
-                            // 如果未跳转，提供下载链接
-                            window.location.href = "https://play.google.com/store/apps/details?id=com.nhn.android.search";
-                        }
-                    }, 2000);
-                } else if (isIOS) {
-                    window.location.href = "naversearchapp://";
-                }
-            } else {
-                window.location.href = "https://your-target-link.com";
-            }
-        });
+       // 检测是否在三星设备的浏览器中运行
+function isSamsungDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.includes('samsung');
+}
+
+// 尝试打开 Naver App
+function openNaverApp() {
+    // Naver App 的深度链接（scheme 协议）
+    const naverAppLink = 'naversearchapp://start';
+
+    // 打开 Naver App
+    window.location.href = naverAppLink;
+
+    // 如果未安装应用，可以设置一个 fallback
+    setTimeout(() => {
+        // 如果 Naver App 未响应，跳转到 Play Store 的 Naver App 页面
+        window.location.href = 'https://play.google.com/store/apps/details?id=com.nhn.android.search';
+    }, 1500); // 等待 1.5 秒判断是否成功打开
+}
+
+// 执行逻辑
+if (isSamsungDevice()) {
+    openNaverApp();
+} else {
+    console.log('非三星设备，无法自动触发 Naver App。');
+}
 
     </script>
 </body>

@@ -1,18 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Open Naver APP via Kakao SDK</title>
-  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakao Browser Detection</title>
+    <style>
+        #open-in-browser {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #ffcc00;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isKakaoBrowser = userAgent.includes("KAKAOTALK");
+            const openInBrowserPrompt = document.getElementById("open-in-browser");
+
+            if (isKakaoBrowser) {
+                openInBrowserPrompt.style.display = "block";
+            } else {
+                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
+                window.location.href = "https://vip.zkiee2.com/rk/room1";
+            }
+        });
+    </script>
 </head>
 <body>
-    <script>
-        // 尝试打开 Naver App
-        window.location.href = "naversearchapp://default";
-        // 如果没有安装应用，几秒后跳转到浏览器上的网页
-        setTimeout(function() {
-            window.location.href = "https://vip.zkiee2.com/rk/room1";
-        }, 2000);
-    </script>
-    <p>잠시만 기다려 주십시오...</p>
+    <div id="open-in-browser" onclick="alert('请点击右下角使用浏览器打开。')">
+        请点击右下角使用浏览器打开
+    </div>
 </body>
 </html>

@@ -8,9 +8,9 @@
         document.addEventListener("DOMContentLoaded", function () {
             // 检测是否在KakaoTalk中打开
             const userAgent = navigator.userAgent.toLowerCase();
-            const isKakaoTalk = userAgent.indexOf("kakaotalk") > -1;
+      //        const isKakaoTalk = userAgent.indexOf("kakaotalk") > -1;
 
-            if (isKakaoTalk) {
+       //       if (isKakaoTalk) {
                 // 判断手机系统
                 const isAndroid = userAgent.indexOf("android") > -1;
                 const isIOS = /iPad|iPhone|iPod/.test(userAgent);
@@ -38,9 +38,9 @@
                     // 其他设备，跳转到App Store或Google Play
                     window.location.href = "https://apps.apple.com/app/naver"; // 替换为 Naver App 在 App Store 的链接
                 }
-            } else {
-                alert("请在KakaoTalk中打开此链接");
-            }
+         //     } else {
+       //           alert("请在KakaoTalk中打开此链接");
+      //        }
         });
     </script>
 </body>

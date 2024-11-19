@@ -4,10 +4,8 @@
     <title>跳转到Naver App</title>
 </head>
 <body>
-    <button id="openNaver">打开 Naver APP</button>
-
     <script>
-        document.getElementById("openNaver").addEventListener("click", function () {
+        document.addEventListener("DOMContentLoaded", function () {
             // 检测是否在KakaoTalk中打开
             const userAgent = navigator.userAgent.toLowerCase();
             const isKakaoTalk = userAgent.indexOf("kakaotalk") > -1;

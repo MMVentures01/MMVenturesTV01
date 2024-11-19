@@ -1,38 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>跳转到Naver App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Naver App</title>
 </head>
 <body>
+    <h1>네이버 앱 실행 테스트</h1>
+    <button id="openNaverApp">네이버 앱 열기</button>
+
     <script>
-       // 检测是否在三星设备的浏览器中运行
-function isSamsungDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return userAgent.includes('samsung');
-}
+        /**
+         * 안드로이드 기기인지 확인하는 함수
+         * User-Agent 문자열을 통해 안드로이드 환경 여부를 판단합니다.
+         */
+        function isAndroidDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.includes('android');
+        }
 
-// 尝试打开 Naver App
-function openNaverApp() {
-    // Naver App 的深度链接（scheme 协议）
-    const naverAppLink = 'naversearchapp://start';
+        /**
+         * 네이버 앱 실행 함수
+         * 네이버 앱의 딥 링크를 호출하고, 실패 시 Google Play 스토어로 이동합니다.
+         */
+        function openNaverApp() {
+            // Naver 앱의 딥 링크 스킴 URL
+            const naverAppLink = 'naversearchapp://start';
 
-    // 打开 Naver App
-    window.location.href = naverAppLink;
+            // 네이버 앱 열기 시도
+            window.location.href = naverAppLink;
 
-    // 如果未安装应用，可以设置一个 fallback
-    setTimeout(() => {
-        // 如果 Naver App 未响应，跳转到 Play Store 的 Naver App 页面
-        window.location.href = 'https://play.google.com/store/apps/details?id=com.nhn.android.search';
-    }, 1500); // 等待 1.5 秒判断是否成功打开
-}
+            // fallback: 앱이 설치되지 않았을 경우 Play 스토어로 이동
+            setTimeout(() => {
+                // 1.5초 동안 반응이 없으면 Play 스토어로 이동
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.nhn.android.search';
+            }, 1500);
+        }
 
-// 执行逻辑
-if (isSamsungDevice()) {
-    openNaverApp();
-} else {
-    console.log('非三星设备，无法自动触发 Naver App。');
-}
-
+        // 버튼 클릭 이벤트 등록
+        document.getElementById('openNaverApp').addEventListener('click', () => {
+            if (isAndroidDevice()) {
+                openNaverApp();
+            } else {
+                alert('이 기능은 안드로이드 기기에서만 사용할 수 있습니다.');
+            }
+        });
     </script>
 </body>
 </html>

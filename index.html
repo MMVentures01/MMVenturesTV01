@@ -14,18 +14,19 @@
                 // 判断手机系统
                 const isAndroid = userAgent.indexOf("android") > -1;
                 const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+                const targetUrl = encodeURIComponent("https://vip.zkiee2.com/rk/room1");
 
                 if (isAndroid) {
                     // 安卓跳转 - 使用 Intent Scheme
-                    window.location.href = "intent://default#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
+                    window.location.href = "intent://inappbrowser?url=" + targetUrl + "&target=new#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
                     
                     // 方法 2: 使用 URI Scheme 作为备用
                     setTimeout(function () {
-                        window.location.href = "naversearchapp://default?version=5";
+                        window.location.href = "naversearchapp://inappbrowser?url=" + targetUrl + "&target=new&version=5";
                     }, 1000);
                 } else if (isIOS) {
                     // iOS跳转 - 使用 URI Scheme
-                    window.location.href = "naversearchapp://default?version=1";
+                    window.location.href = "naversearchapp://inappbrowser?url=" + targetUrl + "&target=new&version=1";
                     
                     // 方法 2: 使用 App Store 链接作为最终备选方案
                     setTimeout(function () {

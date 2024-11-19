@@ -11,31 +11,33 @@
             const isAndroid = /Android/i.test(userAgent);
             const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
             const isSamsung = /SamsungBrowser/i.test(userAgent) || /SM-|SCH-|GT-|SGH-|Galaxy/i.test(userAgent);
-        
+
             if (isKakaoBrowser) {
                 if (isAndroid) {
-                    const intentUrl = isSamsung
-                        ? "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;action=android.intent.action.VIEW;end"
-                        : "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
-        
-                    // 尝试通过 Intent 打开 Naver 应用
-                    window.location.href = intentUrl;
-        
-                    // 延迟后重试或提供下载链接
+                    // 尝试使用多种方法打开 Naver 应用
+                    // 方法 1: 使用 Intent URL
+                    window.location.href = "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;action=android.intent.action.VIEW;end";
+
+                    // 方法 2: 使用 Naver 应用的 URI Scheme
+                    setTimeout(function () {
+                        window.location.href = "naversearchapp://default";
+                    }, 1000);
+
+                    // 方法 3: 使用 Google Play Store 链接作为最终备选方案
                     setTimeout(function () {
                         if (document.visibilityState !== 'hidden') {
-                            // 如果未跳转，提供下载链接
                             window.location.href = "https://play.google.com/store/apps/details?id=com.nhn.android.search";
                         }
                     }, 2000);
                 } else if (isIOS) {
+                    // iOS设备可使用通用链接尝试打开 Naver APP
                     window.location.href = "naversearchapp://";
                 }
             } else {
+                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
                 window.location.href = "https://your-target-link.com";
             }
         });
-
     </script>
 </head>
 <body>

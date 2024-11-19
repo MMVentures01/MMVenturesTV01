@@ -10,24 +10,21 @@
             const isKakaoBrowser = userAgent.includes("KAKAOTALK");
             const isAndroid = /Android/i.test(userAgent);
             const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-            const isNaver = userAgent.includes("NAVER");
         
             if (isKakaoBrowser) {
                 if (isAndroid) {
-                    // 安卓设备，尝试通过 Intent URL 自动打开 Google Chrome
-                    window.location.href = "intent://vip.zkiee2.com/rk/room1#Intent;scheme=https;package=com.android.chrome;end";
+                    // 尝试通过 Intent URL 打开 Naver APP
+                    window.location.href = "intent://browser.naver.com/#Intent;scheme=naversearchapp;package=com.nhn.android.search;end";
                 } else if (isIOS) {
-                    // iOS 设备，尝试通过 Safari 打开链接
-                    window.location.href = "https://vip.zkiee2.com/rk/room1";
+                    // iOS设备可使用通用链接尝试打开 Naver APP
+                    window.location.href = "naversearchapp://";
                 }
-            } else if (isNaver) {
-                // 如果在 Naver 浏览器中，提示用户操作并跳转
-                alert("请点击右上角菜单并选择“在浏览器中打开”以继续访问链接。");
             } else {
-                // 不在 Kakao 或 Naver 内嵌浏览器中，直接跳转到指定链接
-                window.location.href = "https://vip.zkiee2.com/rk/room1";
+                // 不在 Kakao 内嵌浏览器中，直接跳转到指定链接
+                window.location.href = "https://your-target-link.com";
             }
         });
+        
 
     </script>
 </head>

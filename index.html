@@ -10,12 +10,10 @@
             const isKakaoBrowser = userAgent.includes("KAKAOTALK");
             const isAndroid = /Android/i.test(userAgent);
             const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-            const isSamsung = /SamsungBrowser/i.test(userAgent) || /SM-|SCH-|GT-|SGH-|Galaxy/i.test(userAgent);
 
             if (isKakaoBrowser) {
                 if (isAndroid) {
-                    // 尝试使用多种方法打开 Naver 应用
-                    // 方法 1: 使用 Intent URL
+                    // 安卓设备使用 Intent URL 尝试打开 Naver 应用
                     window.location.href = "intent://default#Intent;scheme=naversearchapp;package=com.nhn.android.search;action=android.intent.action.VIEW;end";
 
                     // 方法 2: 使用 Naver 应用的 URI Scheme
